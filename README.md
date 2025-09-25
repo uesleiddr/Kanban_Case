@@ -5,54 +5,70 @@ O objetivo é criar um **sistema Kanban** que permita gerenciar diferentes tipos
 
 ---
 
-## Épico
+##  Épico
 Criar um sistema Kanban que permita gerenciar workflows personalizados.
 
 ---
 
-## Plano de Trabalho
+##  Plano de Trabalho
 
-### Etapa 1 — Configuração inicial do projeto
+### Etapa 1 — Configuração inicial do projeto + Banco de Dados
 - Criar projeto Phoenix (`mix phx.new kanban_app`)
 - Instalar dependências (`mix deps.get`)
-- Rodar servidor local (`mix phx.server`)  
-**Entregável:** Projeto Phoenix rodando em localhost.
+- Configurar **PostgreSQL** no projeto (ajustes em `config/dev.exs`)
+- Criar e migrar banco vazio (`mix ecto.create`)
+- Rodar servidor local (`mix phx.server`)
+
+**Entregável:** Projeto Phoenix rodando em localhost com banco configurado e pronto para receber migrations.
 
 ---
 
 ### Etapa 2 — Estrutura da aplicação
-- Criar módulo **LiveView** para exibir workflows.
-- Definir **dados mockados** (sem banco de dados, inicialmente).  
-**Entregável:** Tela inicial mostrando workflows e suas etapas.
+- Criar módulo **LiveView** para exibir workflows
+- Definir **dados mockados** para workflows e tarefas (sem persistência inicial)
+
+**Entregável:** Página inicial exibindo workflows mockados com suas etapas.
 
 ---
 
 ### Etapa 3 — Protótipo da interface
-- Criar **layout de colunas Kanban** para visualizar etapas.
-- Adicionar estilos básicos (**Tailwind**).  
-**Entregável:** Protótipo navegável da tela de workflows.
+- Criar **layout estilo Kanban** (colunas representando etapas e cards representando tarefas)
+- Adicionar estilização básica com **TailwindCSS**
+
+**Entregável:** Protótipo navegável da tela de workflows em formato Kanban.
 
 ---
 
-### Etapa 4 — Banco de dados
-- Configurar **PostgreSQL** com **Ecto**.
-- Criar tabelas para workflows e tarefas.
-- Exibir dados do banco no LiveView.  
-**Entregável:** Workflows persistidos no banco.
+### Etapa 4 — Persistência e integração com banco
+- Criar migrations para **Workflows**, **Stages** e **Tarefas**
+- Adaptar **LiveView** para carregar dados diretamente do banco
+- Popular banco com **seeds** de exemplo para a demo
+
+**Entregável:** Workflows persistidos e exibidos dinamicamente no Board.
 
 ---
 
-### Etapa 5 — Incrementos futuros
-- Criar **CRUD** de workflows.
-- Adicionar **CRUD** de tarefas.
-- Implementar **drag & drop** das tarefas entre colunas.  
-**Entregável:** Sistema Kanban funcional e dinâmico.
+### Etapa 5 — Funcionalidades adicionais
+- Criar **CRUD** de workflows
+- Adicionar **CRUD** de tarefas
+- Implementar movimentação simples de tarefas entre colunas (botões ← / →)
+- Adicionar testes unitários básicos para contextos (Ecto)
+
+**Entregável:** Sistema Kanban funcional com persistência e movimentação de tarefas.
+
+---
+
+### Próximas evoluções (roadmap futuro)
+- Implementar **drag & drop** de tarefas entre colunas  
+- Criar sistema de **usuários e permissões**  
+- Adicionar histórico de movimentações (auditoria)  
+- Explorar integrações externas via **API**  
 
 ---
 
 ## 🛠️ Tecnologias utilizadas
 - **Elixir** (linguagem)
-- **Phoenix Framework** (backend + frontend)
-- **Phoenix LiveView** (interface em tempo real)
-- **TailwindCSS** (estilização)
-- **PostgreSQL + Ecto** (persistência, opcional)
+- **Phoenix Framework**
+- **Phoenix LiveView**
+- **TailwindCSS**
+- **PostgreSQL + Ecto**
