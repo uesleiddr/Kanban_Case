@@ -1,74 +1,76 @@
 # Case Técnico – Sistema Kanban
 
-Este repositório contém o case técnico desenvolvido para o processo seletivo da **Distu**.  
-O objetivo é criar um **sistema Kanban** que permita gerenciar diferentes tipos de processos através de **workflows personalizados**.
+Este repositório contém o case técnico desenvolvido para o processo seletivo da Distu.  
+O objetivo é criar um sistema Kanban que permita gerenciar diferentes tipos de processos através de workflows personalizados.
 
 ---
 
-##  Épico
-Criar um sistema Kanban que permita gerenciar workflows personalizados.
+## Épico
+Criar um sistema Kanban que permita gerenciar workflows personalizados com persistência real de dados.
 
 ---
 
-##  Plano de Trabalho
+## Plano de Trabalho
 
 ### Etapa 1 — Configuração inicial do projeto + Banco de Dados
-- Criar projeto Phoenix (`mix phx.new kanban_app`)
-- Instalar dependências (`mix deps.get`)
-- Configurar **PostgreSQL** no projeto (ajustes em `config/dev.exs`)
-- Criar e migrar banco vazio (`mix ecto.create`)
-- Rodar servidor local (`mix phx.server`)
+- Criar projeto Phoenix LiveView: `mix phx.new kanban_live --live --database postgres`
+- Instalar dependências: `mix deps.get`
+- Configurar PostgreSQL no projeto (`config/dev.exs`)
+- Criar e migrar banco vazio: `mix ecto.create`
+- Rodar servidor local: `mix phx.server`
 
-**Entregável:** Projeto Phoenix rodando em localhost com banco configurado e pronto para receber migrations.
-
----
-
-### Etapa 2 — Estrutura da aplicação
-- Criar módulo **LiveView** para exibir workflows
-- Definir **dados mockados** para workflows e tarefas (sem persistência inicial)
-
-**Entregável:** Página inicial exibindo workflows mockados com suas etapas.
+**Entregável:** Projeto Phoenix rodando em localhost com banco configurado.
 
 ---
 
-### Etapa 3 — Protótipo da interface
-- Criar **layout estilo Kanban** (colunas representando etapas e cards representando tarefas)
-- Adicionar estilização básica com **TailwindCSS**
+### Etapa 2 — Estrutura de dados e migrations
+- Criar contextos e schemas para:
+  - `Workflow` (nome)  
+  - `Stage` (nome, posição, workflow_id)  
+  - `Card` (título, posição, stage_id)  
+- Criar migrations correspondentes e migrar banco
 
-**Entregável:** Protótipo navegável da tela de workflows em formato Kanban.
-
----
-
-### Etapa 4 — Persistência e integração com banco
-- Criar migrations para **Workflows**, **Stages** e **Tarefas**
-- Adaptar **LiveView** para carregar dados diretamente do banco
-- Popular banco com **seeds** de exemplo para a demo
-
-**Entregável:** Workflows persistidos e exibidos dinamicamente no Board.
+**Entregável:** Banco estruturado com migrations para Workflows, Stages e Cards.
 
 ---
 
-### Etapa 5 — Funcionalidades adicionais
-- Criar **CRUD** de workflows
-- Adicionar **CRUD** de tarefas
-- Implementar movimentação simples de tarefas entre colunas (botões ← / →)
-- Adicionar testes unitários básicos para contextos (Ecto)
+### Etapa 3 — Popular banco de dados
+- Criar `seeds.exs` para popular o banco com exemplos reais de workflows, stages e cards
+- Rodar `mix ecto.setup` para limpar e popular tabelas
 
-**Entregável:** Sistema Kanban funcional com persistência e movimentação de tarefas.
+**Entregável:** Banco com dados persistentes prontos para uso na interface.
 
 ---
 
-### Próximas evoluções (roadmap futuro)
-- Implementar **drag & drop** de tarefas entre colunas  
-- Criar sistema de **usuários e permissões**  
-- Adicionar histórico de movimentações (auditoria)  
-- Explorar integrações externas via **API**  
+### Etapa 4 — Implementação do LiveView
+- Criar LiveView `BoardLive` para exibir os workflows com suas stages e cards
+- Carregar dados do banco em tempo real com `Repo.all` e `preload`
+- Implementar movimentação de cards entre stages usando botões (`phx-click`)
+- Ordenar stages e cards por posição para manter consistência visual
+
+**Entregável:** Interface Kanban totalmente funcional, com dados persistentes e movimentação de cards.
 
 ---
 
-## 🛠️ Tecnologias utilizadas
-- **Elixir** (linguagem)
-- **Phoenix Framework**
-- **Phoenix LiveView**
-- **TailwindCSS**
-- **PostgreSQL + Ecto**
+### Etapa 5 — Estilização
+- Criar layout Kanban com colunas representando stages e cards
+- Adicionar cores e estilos diferentes para cada stage com TailwindCSS
+
+**Entregável:** Interface agradável, clara e navegável, refletindo os dados reais do banco.
+
+---
+
+## Roadmap Futuro
+- Drag & drop de cards entre colunas  
+- Sistema de usuários e permissões  
+- Histórico de movimentações (auditoria)  
+- Integrações externas via API
+
+---
+
+##  Tecnologias Utilizadas
+- Elixir  
+- Phoenix Framework  
+- Phoenix LiveView  
+- TailwindCSS  
+- PostgreSQL + Ecto
